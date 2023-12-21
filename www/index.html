@@ -11,12 +11,19 @@
     <script src="keys.js"></script>
     <script>
         let ncmb = new NCMB(appKey, clientKey);
-        let UTdata = ncmb.DataStore("UpdateTest");
+        // NCMBで使用するデータストアのクラス指定
+        let UTdata = ncmb.DataStore("UpdataTest");
+        //新しいクラスm2  let UTdata = ncmb.DataStore("m2");
+        // NCMBのsocreに代入
         let key = "score";
+        let key2 = "name";
+        let key3 = "birthdaymonth";
+        let key4 = "birthdayDay";
 
         function enterData() {
             let uTdata = new UTdata();
             let value = parseInt($("#data").val());
+            // NCMBのscoreにvalueを代入
             uTdata.set(key, value)
                 .save()
                 .then(function(results) {
@@ -123,6 +130,66 @@
                     $("#display").html("update fail:" + JSON.stringify(error));
                 })
         }
+
+//mbass_searchを参考にupdateでサーチできるようにする
+//nameやlevelの部分をscoreに変換して確認
+        function fetchAll2(){
+            let TestDataClass = ncmb.DataStore(Updata);
+            TestDataClass.order("score",false).fetchAll()
+            .then(function(results){
+                showResults(results);
+            })
+        }
+        function searchName(){
+            let TestDataClass = ncmb.DataStore(Updata);
+            let score = $("#score").val();
+            TestDataClass.equalTo("score",score).fetchAll()
+            .then(function(results){
+                showResults(results);
+            })
+        }
+        function searchLevel(){
+            let TestDataClass = ncmb.DataStore(Updata);
+            let score = $("#score").val();
+            TestDataClass.equalTo("score",score).fetchAll()
+            .then(function(results){
+                showResults(results);
+            })
+        }
+        function searchLevelLT(){
+            let TestDataClass = ncmb.DataStore(Updata);
+            let score = parseInt($("#score").val());
+            TestDataClass.lessThan("score",score).fetchAll()
+            .then(function(results){
+                showResults(results);
+            })
+        }
+        function searchLevelGT(){
+            let TestDataClass = ncmb.DataStore(Updata);
+            let score = parseInt($("#score").val());
+            TestDataClass.greaterThan("score",score).fetchAll()
+            .then(function(results){
+                showResults(results);
+            })
+        }
+        function showResults(results){
+            let msg = "<table><tr><th>name</th><th>Lv1</th><th>attack</th><th>defence</th></tr>"
+            for(let i = 0; i < results.length; i++){
+                //各データを収めた表の列を生成
+                msg += "<tr>";
+                msg += "<tb>"+results[i].name+"</tb>"
+                msg += "<tb calss='num'>"+results[i].level+"</tb>"
+                msg += "<tb calss='num'>"+results[i].attack+"</tb>"
+                msg += "<tb calss='num'>"+results[i].defence+"</tb>"
+                msg += "</tr>";
+            }
+            //テーブルのテイラを生成
+            msg += "</table>";
+            $("#message").html(msg);
+        }
+
+
+
     </script>
 </head>
 
@@ -142,11 +209,13 @@
         <input type="text" id="update" placeholder="更新">
         <a onclick="updateData()" class="btn btn-outline-secondary" role="button">Update</a>
     </div>
+    <h2 class="text-light bg-secondary">mbaas search</h2>
     <div>
-        <h2 class="text-light bg-secondary">mbaas search</h2>
+        <input type="text" id="data" placeholder="名前検索">
+        <a onclick="searchName()" class="btn btn-outline-secondary" role="button">Search</a>
     </div>
     <div>
-        
+        <a onclick="searchLevel()" class="btn btn-outline-secondary" role="button">Searchrlevel</a>
     </div>
     <div id="display" class="text-light bg-info">
         Results

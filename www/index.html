@@ -12,19 +12,25 @@
     <script>
         let ncmb = new NCMB(appKey, clientKey);
         // NCMBで使用するデータストアのクラス指定
-        let UTdata = ncmb.DataStore("UpdataTest");
+        //let UTdata = ncmb.DataStore("UpdataTest");
+        let UTdata = ncmb.DataStore("m2");
         //新しいクラスm2  let UTdata = ncmb.DataStore("m2");
         // NCMBのsocreに代入
         let key = "score";
-        let key2 = "name";
-        let key3 = "birthdaymonth";
-        let key4 = "birthdayDay";
+        let key2 = "birthdaymonth";
+        let key3 = "birthdayDay";
+        let key4 = "name";
 
         function enterData() {
             let uTdata = new UTdata();
             let value = parseInt($("#data").val());
+            let value2 = parseInt($("#data2").val());
+            let value3 = $("#data3").val();
             // NCMBのscoreにvalueを代入
-            uTdata.set(key, value)
+            //keyによってデータの代入先が変わる
+            uTdata.set(key2, value)
+            uTdata.set(key3, value2)
+            uTdata.set(key4, value3)
                 .save()
                 .then(function(results) {
                     $("#display").removeClass();
@@ -184,6 +190,7 @@
                 msg += "</tr>";
             }
             //テーブルのテイラを生成
+            
             msg += "</table>";
             $("#message").html(msg);
         }
@@ -196,7 +203,9 @@
 <body>
     <h1 class="text-light bg-secondary">mbaas update</h1>
     <div>
-        <input type="text" id="data" placeholder="スコア">
+        <input type="text" id="data" placeholder="誕生月">
+        <input type="text" id="data2" placeholder="誕生日">
+        <input type="text" id="data3" placeholder="名前">
         <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
     </div>
     <div>
@@ -211,7 +220,11 @@
     </div>
     <h2 class="text-light bg-secondary">mbaas search</h2>
     <div>
-        <input type="text" id="data" placeholder="名前検索">
+        <input type="text" id="data" placeholder="月検索">
+        <a onclick="searchName()" class="btn btn-outline-secondary" role="button">Search</a>
+    </div>
+    <div>
+        <input type="text" id="data" placeholder="日検索">
         <a onclick="searchName()" class="btn btn-outline-secondary" role="button">Search</a>
     </div>
     <div>

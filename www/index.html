@@ -67,7 +67,7 @@
         }
 
         function sortData() {
-            UTdata.order(key, true).fetchAll()
+            UTdata.order(key3, true).fetchAll()
                 .then(function(results) {
                     let msg = "";
                     for (let i = 0; i < results.length; i++) {
@@ -123,8 +123,16 @@
 
         //mbass_searchを参考にupdateでサーチできるようにする
         //nameやlevelの部分をscoreに変換して確認
+        /*function fetchAll2(){
+            UTdata.order("birthdaymonth",false).fetchAll2()
+            .then(function(results){
+                showResults(results);
+            })
+        }*/
+
+
         function searchmonth(){
-            let month = $("#data").val();
+            let month = parseInt($("#data4").val());
             UTdata.equalTo("birthdaymonth",month).fetchAll()
             .then(function(results){
                 showResults(results);
@@ -132,7 +140,7 @@
         }
 
         function searchday(){
-            let day = $("#data2").val();
+            let day = parseInt($("#data5").val());
             UTdata.equalTo("birthdayDay",day).fetchAll()
             .then(function(results){
                 showResults(results);
@@ -143,14 +151,14 @@
             let msg = "";
             for(let i = 0; i < results.length; i++){
                 //各データを収めた表の列を生成
-                msg += results[i].birthdaymonth+"月"
-                msg += results[i].birthdayDay+"日"
-                msg += results[i].name+"</tb>"
+                msg += results[i].birthdaymonth+"月";
+                msg += results[i].birthdayDay+"日";
+                msg += results[i].name+"</br>"
+                
             }
             //テーブルのテイラを生成
-            
             //msg += "</table>";
-            //$("#message").html(msg);
+            $("#display").html(msg);
         }
 
 
@@ -174,11 +182,11 @@
     </div>
     <h2 class="text-light bg-secondary">mbaas search</h2>
     <div>
-        <input type="text" id="data" placeholder="月検索">
+        <input type="text" id="data4" placeholder="月検索">
         <a onclick="searchmonth()" class="btn btn-outline-secondary" role="button">Search</a>
     </div>
     <div>
-        <input type="text" id="data2" placeholder="日検索">
+        <input type="text" id="data5" placeholder="日検索">
         <a onclick="searchday()" class="btn btn-outline-secondary" role="button">Search2</a>
     </div>
     <div id="display" class="text-light bg-info">

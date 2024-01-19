@@ -49,7 +49,11 @@
                 .then(function(results) {
                     let msg = "";
                     for (let i = 0; i < results.length; i++) {
-                        msg += results[i].get(key) + "<br>";
+                        //msg += results[i].get(key) + "<br>";
+                        msg += results[i].get(key2) + "月";
+                        msg += results[i].get(key3) + "日";
+                        msg += results[i].get(key4) +"<br>";
+
                     }
                     $("#display").removeClass();
                     $("#display").addClass("text-light");
